@@ -38,3 +38,7 @@ textarea {
   color: gray;
 }
 
+.exceeded{
+  color: red !important;
+}
+

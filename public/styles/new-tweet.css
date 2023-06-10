@@ -1,0 +1,40 @@
+.container{
+  width: 90%;
+  margin: 0 auto;
+}
+
+main div button{
+  margin-top: 2px;
+  height: auto;
+  width: auto;
+  background-color: #4056A1;
+  color: #FFFFFF;
+  font-family: 'Bungee'; /* adds bungee font family to the tweet butto*/
+}
+
+.new-tweet{
+  position: relative;
+}
+
+textarea {
+  margin-top: 10px;
+  border: none; /* Remove the default border */
+  border-bottom: 3px solid black; /* Add bottom border */
+  resize: none; /* Prevent resizing of the textarea */
+  width: 100%;
+  background-color: #f4f1ec;
+}
+
+#tweet-text::placeholder {
+  font-family: 'Source Sans Pro', sans-serif;
+  vertical-align: bottom;
+}
+
+.new-tweet output.counter {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 26px;
+  color: gray;
+}
+

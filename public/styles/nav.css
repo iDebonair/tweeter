@@ -5,17 +5,15 @@ nav {
   color: #FFFFFF;
   padding:1.5em;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: fixed;
-  
 }
 
 .header-text{
   display: flex;
-  font-size: 14px;
+  font-size: 20px;
   color: #FFFFFF;
-  text-transform: capitalize;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .nav-icon{

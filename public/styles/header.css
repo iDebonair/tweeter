@@ -1,4 +1,4 @@
-header{
+.main-header{
   height: 520px;
   width: 100%;
   display: flex;
@@ -6,4 +6,15 @@ header{
   justify-content:end;
   align-items:center;
   color: #FFFFFF;
+}
+
+.main-header img{
+  width: auto;
+  height: auto;
+}
+
+.main-header h2{
+  font-size: 20px;
+  color: #FFFFFF;
+  font-family: 'Source Sans Pro', sans-serif
 }

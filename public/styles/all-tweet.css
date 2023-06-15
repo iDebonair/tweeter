@@ -1,11 +1,11 @@
-.tweet {
+.tweet-container {
   background-color: #FFFFFF;
   border: 3px solid grey;
   width: 90%;
   margin: 20px auto;
 }
 
-.tweet header {
+.tweet-container header {
   /* display: flex; */
   width: 100%;
   border-bottom: 3px solid gray; /* Add bottom border*/
@@ -46,7 +46,7 @@ header h2 {
   color: #333333;
 }
 
-.tweet footer {
+.tweet-container footer {
   display: flex;
   margin-right: 10px;
   justify-content: space-between;
@@ -58,6 +58,6 @@ header h2 {
     margin-top: 1em;
   }
 
-.tweet footer .tweet-icons i:hover {
+.tweet-container footer .tweet-icons i:hover {
   color: orange;
 }

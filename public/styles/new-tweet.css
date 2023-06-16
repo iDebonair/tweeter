@@ -41,3 +41,18 @@ textarea {
 .exceeded{
   color: red !important;
 }
+
+.error-message {
+  display: none; /* Hide the error message by default */
+  
+}
+
+.error-message.show {
+  width: 80% ;
+  margin: 3% auto;
+  display: block; /* Display the error message when the "show" class is added */
+  border: 3px solid red;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: red;
+}
+

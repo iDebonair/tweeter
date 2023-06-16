@@ -8,7 +8,6 @@
 $(document).ready(function() {
   const renderTweets = function(tweets) {
     const $tweetSection = $("#tweet-section");
-    tweets.sort((a, b) => a.created_at - b.created_at);
     for (const tweet of tweets) {
       const $tweet = createTweetElement(tweet);
       $tweetSection.append($tweet);
@@ -29,7 +28,7 @@ const createTweetElement = (tweetData) =>{
   </div>
 
     <div class="group-3">
-     ${tweetData.content.text}
+     ${$("<div>").text(tweetData.content.text).html()}
     </div>
   </header> 
   <footer>
@@ -59,6 +58,21 @@ const formatDate = function(timestamp) {
     return `${diffInDays} days ago`;
   }
 };
+// Function to show the error message
+const showError = function(message) {
+  const $errorMessage = $('.error-message');
+  $errorMessage.text(message);
+  $errorMessage.addClass('show');
+  $errorMessage.slideDown();
+};
+
+// Function to hide the error message
+const hideError = function() {
+  const $errorMessage = $('.error-message');
+  $errorMessage.removeClass('show');
+  $errorMessage.slideUp();
+};
+
 // To submit new tweet to on the web app, the trigger is when the tweet button is clicked
 $('form').on ('submit', function(event){
   // to prevent the web app from automatically loading another url, default should be prevented.
@@ -68,12 +82,14 @@ $('form').on ('submit', function(event){
   $("#tweet-text").val("");
 
   if (tweetText.trim().length === 0) {
-    alert("No tweet is present. Please enter tweet");
+    errorMessage = ("No tweet is present. Please enter tweet");
+    showError(errorMessage);
     return;
   }
 
   if (tweetText.length > 140) {
-    alert("Tweet content is too long. It has exceeded maximum character limit");
+    errorMessage = ("Tweet content is too long. It has exceeded maximum character limit");
+    showError(errorMessage);
     return;
   }
 
@@ -85,6 +101,7 @@ $('form').on ('submit', function(event){
   })
   .then(response =>{
     console.log(response)
+    hideError();
     loadTweets();
   })
 })
@@ -101,4 +118,4 @@ const loadTweets = function() {
   });
 };
 loadTweets();
-})
+});

@@ -1,5 +1,5 @@
 nav {
-  height: 120px;
+  height: 100px;
   width: 100%;
   background-color: #4056A1;
   color: #FFFFFF;
@@ -26,4 +26,10 @@ nav {
 
 nav span {
   font-family: 'Bungee', cursive;
+}
+@media only screen and (max-width: 1024px) {
+  /* Header styles */
+  nav {
+    background-color: transparent;
+  }
 }

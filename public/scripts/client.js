@@ -6,8 +6,12 @@
 
 // Test / driver code (temporary). Eventually will get this from the server.
 $(document).ready(function() {
+$('form').submit(submitForm)
+  loadTweets();
+});
   const renderTweets = function(tweets) {
     const $tweetSection = $("#tweet-section");
+    $tweetSection.empty();
     for (const tweet of tweets) {
       const $tweet = createTweetElement(tweet);
       $tweetSection.append($tweet);
@@ -74,8 +78,7 @@ const hideError = function() {
 };
 
 // To submit new tweet to on the web app, the trigger is when the tweet button is clicked
-$('form').on ('submit', function(event){
-  // to prevent the web app from automatically loading another url, default should be prevented.
+const submitForm = function (event) {
   event.preventDefault();
   const info = $(this).serialize()
   const tweetText = $("#tweet-text").val();
@@ -102,20 +105,23 @@ $('form').on ('submit', function(event){
   .then(response =>{
     console.log(response)
     hideError();
+  })
+  .then(() => {
     loadTweets();
   })
-})
+}
+
 
 // to load new tweets and pass into defined key:value pair
 const loadTweets = function() {
   $.ajax({
     method: 'GET',
-    url: 'http://localhost:8080/tweets',
+    url: '/tweets',
     dataType: 'json',
     success: function(tweets) {
       renderTweets(tweets);
     }
   });
 };
-loadTweets();
-});
+
+

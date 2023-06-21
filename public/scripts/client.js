@@ -19,6 +19,10 @@ $('form').submit(submitForm)
   };
 
 const createTweetElement = (tweetData) =>{
+  // Add timeago.js library to reflect time the tweet was created
+  const tweetDate = new Date(tweetData.created_at);
+  const timeAgo = timeago.format(tweetDate);
+  
   const $tweet = `<article class="tweet-container">
   <header>
   <div class="grouped-class"> 
@@ -36,32 +40,18 @@ const createTweetElement = (tweetData) =>{
     </div>
   </header> 
   <footer>
-    <p>${formatDate(tweetData.created_at)}</p>
+    <p>${timeAgo}</p>
     <div class="tweet-icons">
     <i class="fa-solid fa-heart"></i>
       <i class="fas fa-retweet"></i>
       <i class="fas fa-share"></i>
     </div>
   </footer>
-</article>`
-
+</article>
+`
 return $tweet;
 }
 
-// format date of tweet to reflect in days
-const formatDate = function(timestamp) {
-  const currentDate = new Date();
-  const tweetDate = new Date(timestamp);
-  const diffInDays = Math.floor((currentDate - tweetDate) / (1000 * 60 * 60 * 24));
-
-  if (diffInDays === 0) {
-    return "Today";
-  } else if (diffInDays === 1) {
-    return "Yesterday";
-  } else {
-    return `${diffInDays} days ago`;
-  }
-};
 // Function to show the error message
 const showError = function(message) {
   const $errorMessage = $('.error-message');
@@ -82,7 +72,7 @@ const submitForm = function (event) {
   event.preventDefault();
   const info = $(this).serialize()
   const tweetText = $("#tweet-text").val();
-  $("#tweet-text").val("");
+ 
 
   if (tweetText.trim().length === 0) {
     errorMessage = ("No tweet is present. Please enter tweet");
@@ -105,6 +95,10 @@ const submitForm = function (event) {
   .then(response =>{
     console.log(response)
     hideError();
+    if (tweetText.length >= 1 && tweetText.length <= 140) {
+      // Clear tweet box if character length is between 1 and 140
+      $("#tweet-text").val("");
+    } 
   })
   .then(() => {
     loadTweets();
@@ -114,13 +108,27 @@ const submitForm = function (event) {
 
 // to load new tweets and pass into defined key:value pair
 const loadTweets = function() {
-  $.ajax({
-    method: 'GET',
-    url: '/tweets',
-    dataType: 'json',
-    success: function(tweets) {
-      renderTweets(tweets);
-    }
+  new Promise(function(resolve, reject) {
+    $.ajax({
+      method: 'GET',
+      url: '/tweets',
+      dataType: 'json',
+      success: function(tweets) {
+        resolve(tweets);
+      },
+      error: function(error) {
+        reject(error);
+      }
+    });
+  })
+  .then(function(tweets) {
+    tweets.sort((a, b) => b.created_at - a.created_at); // Sort tweets in descending order
+    renderTweets(tweets);
+  })
+  .catch(function(error) {
+    const errorMessage = "Error loading tweets. Please try again later.";
+    showError(errorMessage);
+    console.log(error);
   });
 };
 
